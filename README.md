@@ -276,6 +276,16 @@ pack build $YOUR_CONTAINER_REGISTRY/bookshop-hana-deployer \
 (Replace `$YOUR_CONTAINER_REGISTRY` with the full-qualified hostname of your container registry)
 
 
+**Build approuter image:**
+
+```
+pack build $YOUR_CONTAINER_REGISTRY/bookshop-approuter \
+     --path app \
+     --buildpack gcr.io/paketo-buildpacks/nodejs \
+     --builder paketobuildpacks/builder:base \
+     --env BP_NODE_RUN_SCRIPTS=
+```
+
 **Build image for CAP service:**
 
 ```
@@ -301,6 +311,7 @@ cds add helm
 cds add xsuaa
 cds add html5-repo
 cds add hana
+cds add approuter
 ```
 #### Helm chart configuration
 
@@ -309,6 +320,29 @@ This project contains a pre-configured configuration file `values.yaml`, you jus
 - `<your-container-registry>` - full-qualified hostname of your container registry
 - `domain`- full-qualified domain name used to access applications in your Kyma cluster
 
+#### Approuter configuration
+
+1. Add the destinations to the `approuterDestinations` in the `values.yaml` file: 
+
+  ```yaml
+  approuterDestinations:
+    backend:
+      service: srv
+  ```
+
+2. Add the OAuth configuration to `xsuaa` in the `values.yaml` file:
+
+    ```yaml
+    xsuaa:
+      ...
+	    parameters:
+        xsappname: bookshop
+	      oauth2-configuration: 
+          redirect-uris:
+            - https://*.<your-domain-name>/**
+      config: xs-security.json 
+          
+    ```
 #### Use API_BUSSINESS_PARTNER Remote Service (optional)
 
 You can try the `API_BUSINESS_PARTNER` service with a real S/4HANA system with the following configuration:
@@ -364,6 +398,8 @@ docker push $YOUR_CONTAINER_REGISTRY/bookshop-hana-deployer
 docker push $YOUR_CONTAINER_REGISTRY/bookshop-srv
 
 docker push $YOUR_CONTAINER_REGISTRY/bookshop-html5-deployer
+
+docker push $YOUR_CONTAINER_REGISTRY/bookshop-approuter
 ```
 
 ### Deployment
@@ -372,6 +408,7 @@ docker push $YOUR_CONTAINER_REGISTRY/bookshop-html5-deployer
 helm upgrade bookshop ./chart --install -f values.yaml
 ```
 
+Note: `<your-release-name>` in the `values.yaml` file should match the release name in the above command.
 ### Access the UI
 
 Before you can access the UI you should make sure to [Setup Authorizations in SAP Business Technology Platform](#setup-authorizations-in-sap-business-technology-platform).
