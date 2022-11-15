@@ -276,7 +276,7 @@ pack build $YOUR_CONTAINER_REGISTRY/bookshop-hana-deployer \
 (Replace `$YOUR_CONTAINER_REGISTRY` with the full-qualified hostname of your container registry)
 
 
-**Build approuter image:**
+**Build AppRouter image:**
 
 ```
 pack build $YOUR_CONTAINER_REGISTRY/bookshop-approuter \
@@ -320,7 +320,7 @@ This project contains a pre-configured configuration file `values.yaml`, you jus
 - `<your-container-registry>` - full-qualified hostname of your container registry
 - `domain`- full-qualified domain name used to access applications in your Kyma cluster
 
-#### Approuter configuration
+#### AppRouter configuration
 
 1. Add the destinations to the `approuterDestinations` in the `values.yaml` file: 
 
