@@ -309,7 +309,6 @@ Add the CAP Helm chart with the required features to this project:
 ```bash
 cds add helm
 cds add xsuaa
-cds add html5-repo
 cds add hana
 cds add approuter
 ```
@@ -318,6 +317,7 @@ cds add approuter
 This project contains a pre-configured configuration file `values.yaml`, you just need to do the following changes in this file:
 
 - `<your-container-registry>` - full-qualified hostname of your container registry
+- `<your-release-name>` - unique name that is also mentioned in the deployment command
 - `domain`- full-qualified domain name used to access applications in your Kyma cluster
 
 #### AppRouter configuration
@@ -382,12 +382,6 @@ You can try the `API_BUSINESS_PARTNER` service with a real S/4HANA system with t
 
 *See also: [API_BUSINESS_PARTNER Remote Service and Spring Profiles](#api_business_partner-remote-service-and-spring-profiles)*
 
-**Build HTML5 application deployer image:**
-
-```
-bash ./scripts/build-ui-image.sh
-```
-
 ### Push container images
 
 You can push all the container images to your container registry, using:
@@ -397,8 +391,6 @@ docker push $YOUR_CONTAINER_REGISTRY/bookshop-hana-deployer
 
 docker push $YOUR_CONTAINER_REGISTRY/bookshop-srv
 
-docker push $YOUR_CONTAINER_REGISTRY/bookshop-html5-deployer
-
 docker push $YOUR_CONTAINER_REGISTRY/bookshop-approuter
 ```
 
@@ -407,17 +399,6 @@ docker push $YOUR_CONTAINER_REGISTRY/bookshop-approuter
 ```
 helm upgrade bookshop ./chart --install -f values.yaml
 ```
-
-Note: `<your-release-name>` in the `values.yaml` file should match the release name in the above command.
-### Access the UI
-
-Before you can access the UI you should make sure to [Setup Authorizations in SAP Business Technology Platform](#setup-authorizations-in-sap-business-technology-platform).
-
-1. Create a Launchpad Service subscription in the BTP Cockpit
-2. Go to **HTML5 Applications**
-3. Start any of the HTML5 applications
-
-Additionally, you can add the UIs to a Launchpad Service site like it is described in in the last two steps of [this tutorial](https://developers.sap.com/tutorials/btp-app-kyma-launchpad-service.html#9aab2dd0-18ea-4ccd-bc44-24e87c845740).
 
 ## Setup Authorizations in SAP Business Technology Platform
 
