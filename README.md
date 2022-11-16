@@ -340,8 +340,7 @@ This project contains a pre-configured configuration file `values.yaml`, you jus
 	      oauth2-configuration: 
           redirect-uris:
             - https://*.<your-domain-name>/**
-      config: xs-security.json 
-          
+      config: xs-security.json      
     ```
 #### Use API_BUSSINESS_PARTNER Remote Service (optional)
 
